@@ -15,6 +15,9 @@ function [filtData, b, a] = besselfilter(order,low,high,sampling,data)
 %       filtData:   Output filtered data. Numeric vector.
 %       b, a:       Transfer function values for the filter. Scalar numeric.
 %    
+%    License:       Please see license.txt in the same repository. 
+%                   In short, this code uses the MIT license: 
+%                   http://opensource.org/licenses/MIT
 
 
 %    Author:         Arnab Gupta
