@@ -8,6 +8,10 @@ function teststr = splitstring(teststr,maxlen)
 %   Inputs:
 %
 %       INPUTSTR: 	char array, this is the input string to be split.
+%		MAXLEN:	  	double, this is the max length of each string section.
+%					Function can be manually overriden using maxlen = 0.
+%					For maxlen = 0, the algorithm is NOT run, and input
+%					string is returned unmodified.
 %		MAXLEN:	  	double, this is the max length of each string section
 %
 %   Outputs:
@@ -18,6 +22,7 @@ function teststr = splitstring(teststr,maxlen)
 %   Subfunctions required:     None
 %   MAT-files required:        None
 %    
+%   See also: splitstringcell.m
 
 %	Author:			Arnab Gupta
 %					Ph.D. Candidate, Virginia Tech.
@@ -27,10 +32,15 @@ function teststr = splitstring(teststr,maxlen)
 %	Email:			arnab@arnabocean.com
 %
 %	Version:		2.0
+%	Last Revised:	10 Dec 2013
 %	Last Revised:	01 Dec 2013
 %
 %	Changelog:
 %
+%		Major update to algorithm. Instead of converting into a cell 
+%		string, now a newline character is inserted within the string.
+%		This has the advantage of the output still being a string that
+%		can be directly inserted into applications.
 %		Major update to algorithm. Now the output is a string with newline
 %		character embedded, instead of a cell of strings.
 
