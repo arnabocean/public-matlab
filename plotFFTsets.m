@@ -14,7 +14,7 @@ function plotFFTsets(nn,ext,mm)
 %	record.
 %	
 %	ext is the search criteria for finding data record files.
-%	Thus if ext = 'txt', the program looks for '*.txt' in the
+%	Thus if ext = '*.txt', the program looks for '*.txt' in the
 %	current folder. This allows this program to be versatile
 %	and handle any kind of data record.
 %	
@@ -57,10 +57,11 @@ function plotFFTsets(nn,ext,mm)
 %	Email:			arnab@arnabocean.com
 %
 %	Version:		1.0
-%	Last Revised:	Fri Sep 14, 2012.
+%	Last Revised:	Fri Jan 17 18:13:35 2014
 %
 %	Changelog:
-%
+%	
+%		Parameterized output file format (set to .png now)
 
 %%	Check input arguments
 
@@ -119,13 +120,13 @@ grid(axes1,'on');
 
 xlabel('Frequency (kHz)','FontSize',16);
 ylabel('Amplitude (V)','FontSize',16);
-titletext = sprintf('FFT Combined, files %d to %d',startindex,endindex);
+titletext = sprintf('FFT sets, files %d to %d, for %s',startindex,endindex,ext);
 title(titletext,'FontSize',18);
 
 %%	Set up other plot parameters
 
-globalymax = 1.0;
-xlim(axes1,[0 0.2e3]);
+globalymax = 0.1;
+xlim(axes1,[0 1e3]);
 ylim(axes1,[0 globalymax]);
 
 hold on;
@@ -134,7 +135,11 @@ hold on;
 
 for i = 1: length(filename)
 
-    disp(i);
+    fprintf('%d\t',i);
+	if mod(i,10) == 0
+		fprintf('\n');
+	end
+
 
 	in = importdata(filename{i,1});
 
@@ -156,12 +161,15 @@ end
 
 %%	Polish and save
 
+prettyPlot(figure1);
+outformat = '.png';
+
 orient landscape
 
-testexist = dir('FFTSet*.pdf');
+testexist = dir(strcat('FFTSet*',outformat));
 flname = strcat('FFTSet',num2str(length(testexist)+1,'%02d'));
 
-saveas(figure1, strcat(flname,'.pdf'));
+saveas(figure1, strcat(flname,outformat));
 % saveas(figure1, strcat(flname,'.fig'));
 
 close(figure1);
