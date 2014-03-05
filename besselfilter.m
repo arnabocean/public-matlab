@@ -1,18 +1,26 @@
 function [filtData, b, a] = besselfilter(order,low,high,sampling,data)
 
 %   besselfilter. Function to implement a bandpass Bessel Filter.
+%    
+%   [filtData, b, a] = besselfilter(order,low,high,sampling,data)
 %   
 %   Inputs:
 %    
 %       order:      Number of poles in the filter. Scalar numeric value.
+%                     Eg.: 4
 %       low:        Lower frequency bound (Hz). Scalar numeric value.
+%                     Eg.: 50000 (= 50kHz)
 %       high:       Upper frequency bound (Hz). Scalar numeric value.
+%                     Eg.: 1000000 (= 1MHz)
 %       sampling:   Sampling frequency (Hz). Scalar numeric value.
+%                     Eg.: 25000000 (= 25MHz)
 %       data:       Input data. Numeric vector.
+%                     Eg.: data vector of size (n x 1)
 %    
 %   Output:
 %    
 %       filtData:   Output filtered data. Numeric vector.
+%                     Eg.: data vector of size (n x 1)
 %       b, a:       Transfer function values for the filter. Scalar numeric.
 %    
 %    License:       Please see license.txt in the same repository. 
@@ -31,6 +39,8 @@ function [filtData, b, a] = besselfilter(order,low,high,sampling,data)
 %    Last Revised:   Thu Dec 12, 2013
 %
 %    Changelog:
+%    
+%       Tue Mar  4, 2014: Updated documentation, removed old commented out lines from code.
 %
 %        
 
@@ -75,14 +85,10 @@ a = az;
 for i = 1:length(data)
     
     y(i)=b(1)*data(i);
-    %disp(y(i));
     for j = 1:length(b)-1
-        %disp(j);
-        %disp(i-j);
         if (i-j)>0
             y(i)=y(i)+b(j+1)*data(i-j)-a(j+1)*y(i-j);
         end
-        %disp(y(i));
     end
 
 end
