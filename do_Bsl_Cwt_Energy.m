@@ -96,13 +96,10 @@ clear scalestart scaleend scaleinc
 
 files = dir(fullfile(ext));
 
-for i = 1: length(files)
-
-    filename{i,1} = files(i,1).name;
-end
+filename = {files(:).name}';
 szfile = size(filename);
 
-clear files i;
+clear files;
 
 
 %% Create variables for saving values 
