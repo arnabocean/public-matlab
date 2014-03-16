@@ -74,8 +74,8 @@ end
 
 %% Loop!
 
-% parfor kk = 1: szfile(1)
-for kk = 1: szfile(1)
+parfor kk = 1: szfile(1)
+% for kk = 1: szfile(1)
 
 	fprintf('%d\t',kk);
 	if mod(kk,10) == 0
@@ -97,9 +97,9 @@ end
 %%	Move files into folder
 
 if besselTrue == 1
-	mvfldr = './bslfftdata';
+	mvfldr = '../bslfftdata';
 else
-	mvfldr = './fftdata';
+	mvfldr = '../fftdata';
 end
 
 movefile('*.fft.txt',mvfldr);
