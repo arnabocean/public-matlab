@@ -1,4 +1,4 @@
-function get_AllCWT_fromBessel(ext)
+function get_AllCWT_fromBessel(ext,tstExt)
 
 
 %	get_AllCWT_fromBessel. Compute Continuous Wavelet Transform
@@ -36,14 +36,24 @@ function get_AllCWT_fromBessel(ext)
 
 if nargin == 0
 	ext = '*.bsl.txt';
+	flag = 1;
+elseif nargin == 1
+	flag = 1;
+elseif nargin == 2
+	filename = removeCommons_BaseFilename(ext,tstExt);
+	flag = 0;
 end
 
-%% Find Files
+%% Find Files (only if flag == 1)
 
-files = dir(fullfile(ext));
-filename = {files(:).name}';
+if flag = 1
+	files = dir(fullfile(ext));
+	filename = {files(:).name}';
 
-clear files;
+	clear files;
+end
+clear flag;
+
 
 szfile = size(filename);
 disp(szfile);
@@ -85,7 +95,7 @@ end
 
 %%	Move files into folder
 
-mvfldr = '../CWTMAT';
+mvfldr = '../BSLCWTMAT';
 movefile('*.mat',mvfldr);
 
 %% Clear memory
