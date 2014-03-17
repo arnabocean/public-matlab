@@ -55,7 +55,7 @@ scaleend = [1500; 1500; 1750];
 wvlt = {'morl'; 'mexh'; 'meyr'};
 
 cwtnum = 1;
-scales = scalestart(kk): scaleinc(kk): scaleend(kk);
+scales = scalestart(cwtnum): scaleinc(cwtnum): scaleend(cwtnum);
 
 %% Parallelize
 
