@@ -46,6 +46,7 @@ filename = {files(:).name}';
 clear files;
 
 szfile = size(filename);
+disp(szfile);
 
 %% CWT parameters
 
