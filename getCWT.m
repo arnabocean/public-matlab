@@ -47,12 +47,18 @@ function [cwtOUT, SC] = getCWT(in,scales,wvlt,flname)
 %	Repository		http://bitbucket.org/arnabocean
 %	Email:			arnab@arnabocean.com
 %
-%	Version:		1.0
-%	Last Revised:	Sat Dec 14 23:31:49 2013
+%	Version:		1.1
+%	Last Revised:	Sun Mar 16 23:22:41 2014
 %
 %	Changelog:
 %
-%		
+%		Changed how files are saved to disk. Before, one .mat file was saved, with 
+%			three variables. Now, TWO .mat files are saved. One with CWT info for
+%			particular file, and another with Scales info. The idea is that if there
+%			are a bunch of files in a folder, then it only takes up space to keep the
+%			Scales information in *each* file, when it's perfectly acceptable to have
+%			the info *once* for the entire folder. The Scales filename is a general
+%			name, which means it will get overwritten when a bunch of files are processed.	
 
 %% default values
 
@@ -95,6 +101,7 @@ SC = abs(cwtOUT.*cwtOUT);
 %%
 
 if ~strcmp(flname,'')
-    save(strcat('cwt',upper(wvlt),'_',flname,'.wlt.mat'),'cwtOUT','scales','wvlt');
+    save(strcat('cwt',upper(wvlt),'_',flname,'.wlt.mat'),'cwtOUT');
+    save(strcat('cwt',upper(wvlt),'_','Scales','.mat'),'scales','wvlt');
 end
 clearvars -except cwtOUT SC
