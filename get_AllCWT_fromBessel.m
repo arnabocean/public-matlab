@@ -77,6 +77,7 @@ parfor kk = 1: szfile(1)
 
 	in = load(filename{kk,1});
 	cw1 = getCWT(in(:,2),scales,wvlt{cwtnum},flname);
+	LCCinlineCWTPlot(cw1,scales,wvlt{cwtnum},strcat(flname,'_',wvlt{cwtnum}));
 end
 
 % matlabpool close;
