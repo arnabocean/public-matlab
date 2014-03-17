@@ -13,7 +13,7 @@ function get_AllCWT_fromBessel(ext,tstExt)
 %
 %			- Filtered data is written to disk as .mat data files.
 %
-%	Other m-files required: getCWT.m.
+%	Other m-files required: getCWT.m, removeCommons_BaseFilename.m.
 %	Sub-functions required: None.
 %	MAT-files required: None.
 %
@@ -27,12 +27,12 @@ function get_AllCWT_fromBessel(ext,tstExt)
 %	Repository		http://bitbucket.org/arnabocean
 %	Email:			arnab@arnabocean.com
 %
-%	Version:		1.0
-%	Last Revised:	Sun Mar 16 19:55:10 2014
+%	Version:		1.1
+%	Last Revised:	Mon Mar 17 18:08:34 2014
 %
 %	Changelog:
 %
-%		
+%		Updated to include removeCommons_BaseFilename implementation.
 
 if nargin == 0
 	ext = '*.bsl.txt';
@@ -46,7 +46,7 @@ end
 
 %% Find Files (only if flag == 1)
 
-if flag = 1
+if flag == 1
 	files = dir(fullfile(ext));
 	filename = {files(:).name}';
 
