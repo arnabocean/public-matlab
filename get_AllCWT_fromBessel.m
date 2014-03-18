@@ -61,7 +61,8 @@ disp(szfile);
 %% CWT parameters
 
 scalestart = [5; 1; 10];
-scaleinc = [5; 5; 5];	% 20
+% scaleinc = [5; 5; 5];	% 20
+scaleinc = [50; 50; 50];	% 20
 scaleend = [1500; 1500; 1750];
 wvlt = {'morl'; 'mexh'; 'meyr'};
 
