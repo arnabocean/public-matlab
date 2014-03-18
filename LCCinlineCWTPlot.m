@@ -11,20 +11,22 @@ function LCCinlineCWTPlot(cw1,scales,wvlt,flname)
 	freqscale = flipdim(freqscale,2)/1000;
 	xpoints = 0: 40E-3: (szSC(2)-1)*40E-3;
 
-	[X,Y] = meshgrid(xpoints,freqscale);
 
 	fig1 = figure('Visible','off');
 	axes1 = axes('Parent',fig1,'FontSize',14);
 
-	contour(X,Y,SC,200);
+	% [X,Y] = meshgrid(xpoints,freqscale);
+	% contour(X,Y,SC,200);
+	contour(xpoints,freqscale,SC,100);
+
 	xlabel('Time (\mus)','FontSize',14);
 	ylabel('Frequency (kHz)','FontSize',14);
 	title(char(strcat({'Continous Wavelet Transform using '},{wvlt})),'FontSize',16);
 	grid on;
 
-	colormax0 = 10E-3;
-	colormax1 = 20E-3;
-	colormax2 = 30E-3;
+	colormax0 = 30E-3; %10E-3;
+	colormax1 = 60E-3;%20E-3;
+	colormax2 = 80E-3;%30E-3;
 	if max(max(SC)) >= colormax2
 	    colormap winter;
 	    colormap(flipud(colormap))
