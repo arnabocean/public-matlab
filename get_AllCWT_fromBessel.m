@@ -38,6 +38,7 @@ if nargin == 0
 	ext = '*.bsl.txt';
 	flag = 1;
 elseif nargin == 1 and strcmp(lower(ext),'plb')
+	disp('Running only PLB Files.');
 	filename = onlyPLBFiles;
 	flag = 0;
 elseif nargin == 1
