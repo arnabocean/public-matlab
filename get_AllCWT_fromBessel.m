@@ -1,4 +1,4 @@
-function get_AllCWT_fromBessel(ext, tstExt, plb)
+function get_AllCWT_fromBessel(ext, tstExt)
 
 
 %	get_AllCWT_fromBessel. Compute Continuous Wavelet Transform
