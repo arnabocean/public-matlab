@@ -1,4 +1,4 @@
-function get_AllCWT_fromBessel(ext,tstExt)
+function get_AllCWT_fromBessel(ext, tstExt, plb)
 
 
 %	get_AllCWT_fromBessel. Compute Continuous Wavelet Transform
@@ -37,6 +37,9 @@ function get_AllCWT_fromBessel(ext,tstExt)
 if nargin == 0
 	ext = '*.bsl.txt';
 	flag = 1;
+elseif nargin == 1 and strcmp(lower(ext),'plb')
+	filename = onlyPLBFiles;
+	flag = 0;
 elseif nargin == 1
 	flag = 1;
 elseif nargin == 2
