@@ -14,6 +14,7 @@ end
 if ~exist('fontNameList','var')
 	if ismac
 		fontNameList = {'Foglihten','Consolas','Consolas'};
+		fontNameList = {'Avenir','Avenir','Avenir'};
 	elseif ispc
 		fontNameList = {'Palatino','Candara','Constantia'};
 	end
