@@ -107,6 +107,8 @@ end
 mvfldr = '../BSLCWTMAT';
 movefile('*.mat',mvfldr);
 
+movefile('*.png','../BSLCWTPNG');
+
 %% Clear memory
 
 clearvars
