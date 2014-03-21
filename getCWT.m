@@ -101,7 +101,7 @@ SC = abs(cwtOUT.*cwtOUT);
 %%
 
 if ~strcmp(flname,'')
-    save(strcat('cwt',upper(wvlt),'_',flname,'.wlt.mat'),'cwtOUT');
+    save(strcat(flname,'.',upper(wvlt),'.wlt.mat'),'cwtOUT');
     save(strcat('cwt',upper(wvlt),'_','Scales','.mat'),'scales','wvlt');
 end
 clearvars -except cwtOUT SC
