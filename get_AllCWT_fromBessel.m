@@ -73,6 +73,7 @@ disp(szfile);
 scalestart = 10;
 scaleinc = 20;
 scaleend = 500;
+wvlt = {'morl'};
 
 cwtnum = 1;
 scales = scalestart(cwtnum): scaleinc(cwtnum): scaleend(cwtnum);
