@@ -8,13 +8,13 @@ elseif nargin > 5
 end
 
 if ~exist('fontSizeList','var')
-	fontSizeList = [16; 14; 14];	% [title; axes; all other]
+	fontSizeList = [16; 16; 16];	% [title; axes; all other]
 end
 
 if ~exist('fontNameList','var')
 	if ismac
 		fontNameList = {'Foglihten','Consolas','Consolas'};
-		fontNameList = {'Avenir','Avenir','Avenir'};
+		fontNameList = {'Arial','Arial','Arial'};
 	elseif ispc
 		fontNameList = {'Palatino','Candara','Constantia'};
 	end
