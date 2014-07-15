@@ -14,6 +14,8 @@ if ~exist('fontNameList','var')
 	elseif ispc
 		fontNameList = {'Palatino','Candara','Constantia'};
 		fontNameList = {'Arial','Arial','Arial'};
+	else
+		fontNameList = {'Century Schoolbook','Century Schoolbook','Century Schoolbook'};
 	end
 end
 
@@ -27,9 +29,9 @@ end
 
 %%
 
-set(findall(gcf,'type','text'),'FontSize',fontSizeList(2),'FontName',fontNameList{2});
+set(findall(figH,'type','text'),'FontSize',fontSizeList(2),'FontName',fontNameList{2});
 
-chlds = get(gcf,'Children');
+chlds = get(figH,'Children');
 
 for kk = 1: length(chlds)
 	set(chlds(kk),'FontSize',fontSizeList(3),'FontName',fontNameList{3});
