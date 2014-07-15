@@ -96,7 +96,7 @@ end
 
 fprintf('\n');	%	to insert a newline.
 
-movefile(strcat('*.',figtype),strcat('./bsl',figtype));
+movefile(strcat('*.',figtype),strcat('../bsl',figtype));
 
 clearvars
 
