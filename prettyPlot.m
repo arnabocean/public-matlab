@@ -1,42 +1,44 @@
-function prettyPlot(figHandle,fontNameList,fontSizeList,textBoxCell,toprghtText)
+function prettyPlot(figH, TeXTrue, fontNameList, fontSizeList)
 
 %%	Initialize
-if nargin == 0
-	error('Too few arguments. Figure handle required.');
-elseif nargin > 5
-	error('Too many arguments. Use help prettyPlot.');
-end
 
-if ~exist('fontSizeList','var')
-	fontSizeList = [16; 16; 16];	% [title; axes; all other]
+if nargin == 0
+	figH = gcf;
 end
 
 if ~exist('fontNameList','var')
+
 	if ismac
-		fontNameList = {'Foglihten','Consolas','Consolas'};
-		fontNameList = {'Arial','Arial','Arial'};
+		% fontNameList = {'Foglihten','Consolas','Consolas'};
+		fontNameList = {'Avenir','Avenir','Avenir'};
 	elseif ispc
 		fontNameList = {'Palatino','Candara','Constantia'};
+		fontNameList = {'Arial','Arial','Arial'};
 	end
 end
 
-%%	
+if ~exist('fontSizeList','var')
+	fontSizeList = [18; 14; 14];	%	Title; Fig Texts (x- and y- labels); Axes Texts (ticks, legends)
+end
 
-set(findall(gcf,'type','text'),'FontSize',fontSizeList(3),'FontName',fontNameList{3},'FontWeight','bold');
-set(gca,'FontSize',fontSizeList(2),'FontName',fontNameList{2},'FontWeight','bold');
+if ~exist('TeXTrue','var')
+	TeXTrue = 0;
+end
 
-set(get(gca,'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold');
+%%
 
-%%	Optional Code, normally commented out, use as necessary
+set(findall(gcf,'type','text'),'FontSize',fontSizeList(2),'FontName',fontNameList{2});
 
-%%	Text boxes at bottom right and top right
+chlds = get(gcf,'Children');
 
-% H = text(1.02, 0.0, textBoxCell, 'VerticalAlignment', 'bottom', ...
-%      'HorizontalAlignment', 'left', ...
-%      'Units', 'normalized');
-% drawnow;
+for kk = 1: length(chlds)
+	set(chlds(kk),'FontSize',fontSizeList(3),'FontName',fontNameList{3});
 
-% H = text(0.99, 0.99, strcat(toprghtText,'\rightarrow'), 'VerticalAlignment', 'top', ...
-%      'HorizontalAlignment', 'right', ...
-%      'Units', 'normalized');
-% drawnow;
+	
+	if TeXTrue == 0
+		set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold');
+	else
+		set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold','Interpreter','Latex');
+	end
+end
+
