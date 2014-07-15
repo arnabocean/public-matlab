@@ -89,14 +89,14 @@ for i = 1: szfile(1)
 
 	figtype = 'png';
 	orient landscape;
-	saveas(figH, strcat(flname,'.raw.',figtype));
+	saveas(figH, strcat(flname,'.bsl.',figtype));
 	close(figH);
 
 end
 
 fprintf('\n');	%	to insert a newline.
 
-movefile(strcat('*.',figtype),strcat('./raw',figtype));
+movefile(strcat('*.',figtype),strcat('./bsl',figtype));
 
 clearvars
 
