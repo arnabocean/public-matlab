@@ -70,13 +70,17 @@ disp(szfile);
 % scaleend = [1500; 1500; 1750];
 % wvlt = {'morl'; 'mexh'; 'meyr'};
 
-scalestart = 10;
-scaleinc = 20;
-scaleend = 500;
-wvlt = {'morl'};
+%	Below was used for v2 of CWT processing.
+% scalestart = 10;
+% scaleinc = 20;
+% scaleend = 500;
+% scales = scalestart(cwtnum): scaleinc(cwtnum): scaleend(cwtnum);
+
 
 cwtnum = 1;
-scales = scalestart(cwtnum): scaleinc(cwtnum): scaleend(cwtnum);
+wvlt = {'morl'};
+scales = [20, 25, 29, 34, 39, 43, 48, 54, 63, 74, 90, 116, 163, 271, 406, 813];
+
 
 %% Parallelize
 
