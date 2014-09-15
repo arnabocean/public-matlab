@@ -13,7 +13,7 @@ function get_AllCWT_fromBessel(ext, tstExt)
 %
 %			- Filtered data is written to disk as .mat data files.
 %
-%	Other m-files required: getCWT.m, removeCommons_BaseFilename.m.
+%	Other m-files required: getCWT.m, removeCommons.m.
 %	Sub-functions required: None.
 %	MAT-files required: None.
 %
@@ -27,25 +27,32 @@ function get_AllCWT_fromBessel(ext, tstExt)
 %	Repository		http://bitbucket.org/arnabocean
 %	Email:			arnab@arnabocean.com
 %
-%	Version:		1.1
-%	Last Revised:	Mon Mar 17 18:08:34 2014
+%	Version:		1.2
+%	Last Revised:	Mon Sep 15 15:12:23 2014
 %
 %	Changelog:
 %
 %		Updated to include removeCommons_BaseFilename implementation.
+%	    Updated to remove reference to removeCommons_BaseFilename.m; instead use NEW removeCommons implementation as removeCommons(ext, TstExt, 1);
 
-if nargin == 0
-	ext = '*.bsl.txt';
-	flag = 1;
+%%	Arguments check
+
+if nargin == 2
+	filename = removeCommons(ext,tstExt,1);
+	
+	flag = 0;	%	No need to search directory for file list
 elseif nargin == 1 && strcmp(lower(ext),'plb')
 	disp('Running only PLB Files.');
 	filename = onlyPLBFiles;
-	flag = 0;
+	
+	flag = 0;	%	No need to search directory for file list
 elseif nargin == 1
-	flag = 1;
-elseif nargin == 2
-	filename = removeCommons_BaseFilename(ext,tstExt);
-	flag = 0;
+	
+	flag = 1;	%	Yes, need to search directory for file list
+elseif nargin == 0
+	ext = '*.bsl.txt';
+	
+	flag = 1;	%	No need to search directory for file list
 end
 
 %% Find Files (only if flag == 1)
