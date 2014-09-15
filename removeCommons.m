@@ -1,41 +1,38 @@
-function filename = removeCommons(ext1,ext2)
+function filename = removeCommons(ext1,ext2,userootname)
 
-%	removeCommons. Function to compare two sets of files and
-%				   create a list of files present in first set
-%				   but not second.
+%	removeCommons. Function to compare two lists of filenames from disk
+%	                  and return a list of filenames NOT common to both of them.
+%
+%	Inputs:
+%
+%	        - ext1: String to be used to get directory listing of source files 
+%	                from disk. Eg. '*.mat'.
+%	        - ext2: String to be used to get directory listing of test files 
+%	                from disk. Eg. '*.png'.
+%	        - userootname: Either 0 (false) or 1 (true). Default value is 0. 
+%	                If userootname = 1, the function uses the root name of each
+%	                file for comparison. 
+%	                If userootname = 0, the function only removes the file 
+%	                extension from each file before comparing.
+%	                Eg., if a filename is 'testfile.v1.mod.txt.md', 
+%	                userootname = 0 uses 'testfile.v1.mod.txt' for comparison.
+%	                userootname = 1 uses 'testfile' for comparison.
 %	
-%	Function to compare lists of files in a folder and create
-%	a new file list of unique files. In particular, the program
-%	compares the result of a directory search of 'ext1' with a 
-%	directory search of 'ext2', and creates the list of files in
-%	the first search that are NOT PRESENT in the second search.
-%	
-%	This function was created for the particular use case where 
-%	an input file is processed and an output file is created, and
-%	the output file varies only in the file extension. In this
-%	situation the same process can be continued by comparing the 
-%	list of input and output files in the directory and only 
-%	processing files for which the corresponding output file
-%	doesn't exist.
-%	
-%	Input:
-%	
-%		-	No arguments. The defaults are: 'ext1' = '*.mat' and 
-%			'ext2' = '*.png'.
-%		-	Master and test extensions. 'Ext1' is the master list
-%			of files to be searched. 'Ext2' is the test list to be
-%			compared against.
-%		*	Note that the string comparison appends the file 
-%			extension of the test string to the file names of the 
-%			master list when comparing.
-%	
-%	Output:
-%		-	filename is a cell array of filenames. Each filename can
-%			be accessed using filename{i,1}.
-%	
-%    License:       Please see license.txt in the same repository. 
-%                   In short, this code uses the MIT license: 
-%                   http://opensource.org/licenses/MIT
+%	        * The function can be run with NO ARGUMENTS, in which case the defaults are:
+%	                ext1 = '*.mat'; ext2 = '*.png'; userootname = 0;
+%                  
+%
+%	Outputs:
+%
+%			- filename: Cell array of filenames. This is a subset of the file list 
+%	                obtained by searching current directory with ext1.
+%
+%	Other m-files required: stripFileString.m.
+%	Sub-functions required: None.
+%	MAT-files required: None.
+%
+%	See also: None.
+
 
 %	Author:			Arnab Gupta
 %					Ph.D. Candidate, Virginia Tech.
@@ -44,15 +41,17 @@ function filename = removeCommons(ext1,ext2)
 %	Repository		http://bitbucket.org/arnabocean
 %	Email:			arnab@arnabocean.com
 %
-%	Version:		1.0
-%	Last Revised:	5 December 2012
+%	Version:		2.0
+%	Last Revised:	Mon Sep 15 04:59:13 2014
 %
 %	Changelog:
 %
-%		
+%		Mon Sep 15 04:59:18 2014: Major update to algorithm, using logical indexing and builtin functions, so that code now runs about 3 time faster.
 
 
 
+
+%%	Argument check
 if nargin == 1
 	disp(sprintf('Warning: Insufficient arguments. Empty variable is output.\n\nUse help removeCommons for information.'));
 	filename = {};
@@ -60,56 +59,54 @@ if nargin == 1
 elseif nargin == 0
 	ext1 = '*.mat';
 	ext2 = '*.png';
+	userootname = 0;
+elseif nargin == 2
+	userootname = 0;
 end
+
+%%	Initialize
 
 filename = {};
 
-%	Gather list of .mat files. Result: matfilename
-matfiles = dir(fullfile(ext1));
+%%	Get lists of filenames to compare
 
-for i = 1: length(matfiles)
+%	Gather list of source files. Result: srcfiles
 
-	matfilename{i,1} = matfiles(i,1).name;
-end
-clear matfiles
-if ~exist('matfilename')
-	matfilename = {};
-end
+files = dir(fullfile(ext1));
+srcfiles = sort({files.name})';
 
-%	Gather list of .png files. Result: pngfilename
-pngfiles = dir(fullfile(ext2));
-for i = 1: length(pngfiles)
+clear files
 
-	pngfilename{i,1} = pngfiles(i,1).name;
-end
-clear pngfiles
-if ~exist('pngfilename')
-	pngfilename = {};
-end
+%	Gather list of test files. Result: tstfiles
 
-if isempty(pngfilename)
-	filename = matfilename;
-	clearvars -except filename;
+files = dir(fullfile(ext2));
+tstfiles = sort({files.name})';
+
+clear files
+
+%%	Consider trivial case of NO common files, i.e. empty tstfiles
+
+if isempty(tstfiles)
+	filename = srcfiles;
+	clearvars srcfiles tstfiles
 	return
 end
 
-%	Compare the two lists and eliminate commons.
-j = 1;
-for i = 1: length(matfilename)
-	matstr = matfilename{i,1};
+%%	Compare
 
-	[pathstr flname flext] = fileparts(matstr);
-	[pathstr1 flname1 flext1] = fileparts(ext2);
-
-	pngstr = strcat(flname,flext1);
-	
-	tmp = strfind(pngfilename,pngstr);
-	
-	if min(cellfun(@isempty,tmp)) == 1 % i.e. if all cells are empty
-		filename{j,1} = matstr;
-		j = j + 1;
-	end
+if userootname == 0
+	[~, modsrcflname, ~] = cellfun(@fileparts,srcfiles,'UniformOutput',0);
+	[~, modtstflname, ~] = cellfun(@fileparts,tstfiles,'UniformOutput',0);
+else
+	modsrcflname = cellfun(@stripFileString,srcfiles,'UniformOutput',0);
+	modtstflname = cellfun(@stripFileString,tstfiles,'UniformOutput',0);
 end
 
-clearvars -except filename
+
+filename = srcfiles(~ismember(modsrcflname,modtstflname));
+
+clear modtstflname modsrcflname srcfiles tstfiles
+
+
+
 
