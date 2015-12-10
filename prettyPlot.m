@@ -1,6 +1,5 @@
 function prettyPlot(figH, TeXTrue, fontNameList, fontSizeList)
 
-;
 %   prettyPlot. Function to make a Matlab figure look pretty.
 %
 %   Inputs:
@@ -32,17 +31,12 @@ function prettyPlot(figH, TeXTrue, fontNameList, fontSizeList)
 %   Repository:     http://bitbucket.org/arnabocean
 %   Email:          arnab@arnabocean.com
 %
-%   Version:        2.0
-%   Last Revised:   
+%   Version:        2.1
+%   Last Revised:   Thu Dec 10 2015
 %
 %   Changelog:
 %
 %      
-
-
-
-
-
 
 
 %%	Initialize
@@ -54,18 +48,20 @@ end
 if ~exist('fontNameList','var')
 
 	if ismac
-		% fontNameList = {'Foglihten','Consolas','Consolas'};
-		fontNameList = {'Avenir','Avenir','Avenir'};
+		% fontNameList = {'Book Antiqua','Book Antiqua','Book Antiqua'};
+		fontNameList = {'Century Schoolbook','Century Schoolbook','Century Schoolbook'};
+% 		fontNameList = {'Avenir','Avenir','Avenir'};
 	elseif ispc
-		fontNameList = {'Palatino','Candara','Constantia'};
-		fontNameList = {'Arial','Arial','Arial'};
+		% fontNameList = {'Book Antiqua','Book Antiqua','Book Antiqua'};
+		fontNameList = {'Century Schoolbook','Century Schoolbook','Century Schoolbook'};
+		% fontNameList = {'Arial','Arial','Arial'};
 	else
 		fontNameList = {'Century Schoolbook','Century Schoolbook','Century Schoolbook'};
 	end
 end
 
 if ~exist('fontSizeList','var')
-	fontSizeList = [18; 14; 14];	%	Title; Fig Texts (x- and y- labels); Axes Texts (ticks, legends)
+	fontSizeList = [16; 14; 12];	%	Title; Fig Texts (x- and y- labels); Axes Texts (ticks, legends)
 end
 
 if ~exist('TeXTrue','var')
@@ -81,11 +77,13 @@ chlds = get(figH,'Children');
 for kk = 1: length(chlds)
 	set(chlds(kk),'FontSize',fontSizeList(3),'FontName',fontNameList{3});
 
-	
-	if TeXTrue == 0
-		set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold');
-	else
-		set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold','Interpreter','Latex');
+	try
+		if TeXTrue == 0
+			set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold');
+		else
+			set(get(chlds(kk),'Title'),'FontSize',fontSizeList(1),'FontName',fontNameList{1},'FontWeight','bold','Interpreter','Latex');
+		end
+	catch
+		continue;
 	end
 end
-
