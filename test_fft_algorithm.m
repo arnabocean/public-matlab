@@ -43,6 +43,24 @@ grid on;
 
 %%
 
+figure(fH2);
+title('FFT of created signal');
+set(get(gca,'XLabel'),'String','Frequency (Hz)');
+set(get(gca,'YLabel'),'String','Amplitude');
+% legend('FFT values','Location','NorthEastOutside');
+legend('FFT values','Location','NorthEast');
+
+xlm = get(gca,'xlim');
+set(gca,'XTick',0:2:max(xlm));
+
+ylm = get(gca,'ylim');
+set(gca,'YTick',0:2:max(ylm));
+
+prettyPlot;
+
+
+%%
+
 freqList = f';
 ampList = A';
 
