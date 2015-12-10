@@ -1,5 +1,50 @@
 function prettyPlot(figH, TeXTrue, fontNameList, fontSizeList)
 
+;
+%   prettyPlot. Function to make a Matlab figure look pretty.
+%
+%   Inputs:
+%
+%      - figH: Figure Handle (optional; defaults to gcf).
+%      - TeXTrue: Set title interpreter as LaTeX? Options: 0 (no), 1 (yes). (Optional; defaults to 0). Note that this only affect the font choice. The title automatically detects LaTeX syntax.
+%      - fontNameList: Cell array of font names to use for Title, Labels and all other text. size(fontNameList) = (1,3). (Optional, default values are within program).
+%      - fontSizeList: Double array of font sizes to use for Title, Labels and all other text. size(fontSizeList) = (3,1). (Optional, default values are within program).
+%
+%   Outputs:
+%
+%      - None.
+%
+%   Other m-files required: None.
+%   Sub-functions required: None.
+%   MAT-files required: None.
+%
+%   See also: None.
+%
+%   License:       Please see license.txt in the same repository. 
+%                  In short, this code uses the MIT license: 
+%                  http://opensource.org/licenses/MIT
+
+
+%   Author:         Arnab Gupta
+%                   Ph.D. Candidate, Virginia Tech.
+%                   Blacksburg, VA.
+%   Website:        http://arnabocean.com
+%   Repository:     http://bitbucket.org/arnabocean
+%   Email:          arnab@arnabocean.com
+%
+%   Version:        2.0
+%   Last Revised:   
+%
+%   Changelog:
+%
+%      
+
+
+
+
+
+
+
 %%	Initialize
 
 if nargin == 0
