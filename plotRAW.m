@@ -1,24 +1,26 @@
-function plotRAW(ext)
-
+function plotRAW(ext, figtype, mvtargetdir)
 
 %	plotRAW. Function to plot data from a set of raw data
-%	         data files into separate figures and save to disk.
+%	         files into separate figures and save to disk.
 %
 %	Inputs:
-%
+%			All input arguments are optional, and can be either omitted or an empty variable.
 %			- ext: String, to identify data files in current 
-%	               directory for analysis. eg.: '*.raw.txt'
+%	               directory for analysis. eg.: '*.raw.txt' (default)
+%   		- figtype: file format to save figure, example 'png' (default) or 'pdf'
+%   		- mvtargetdir: (optional) folder to move all files to. If specified,
+%                          folder is created in the parent directory of current folder.
 %
 %	Outputs:
 %
-%			- Figure files are saved to disk, and moved to 
+%			- Figure files are saved to disk, and optionally moved to 
 %	          separate folder.
 %
-%	Other m-files required: stripFileString.m, prettyPlot.m.
+%	Other m-files required: AG_setPaper, prettyPlot.m.
 %	Sub-functions required: None.
 %	MAT-files required: None.
 %
-%	See also: prettyPlot.m.
+%	See also: None.
 
 
 %	Author:			Arnab Gupta
@@ -28,75 +30,65 @@ function plotRAW(ext)
 %	Repository		http://bitbucket.org/arnabocean
 %	Email:			arnab@arnabocean.com
 %
-%	Version:		1.0
-%	Last Revised:	Wed Jan 29 11:36:11 2014
+%	Version:		2.0
+%	Last Revised:	27 March 2016
 %
 %	Changelog:
 %
 %		
 
 
-
-
 %%
 
-if nargin == 0
+if ~exist('ext','var') || isempty(ext)
 	ext = '*.raw.txt';
 end
 
-%%	Identify files to use
+if ~exist('figtype','var') || isempty(figtype)
+	figtype = 'png';
+end
+
+%%
 
 files = dir(fullfile(ext));
 filename = {files(:).name}';
 clear files;
 
-szfile = size(filename);
+%%
 
-%%	Loop
-
-for i = 1: szfile(1)
+parfor jj = 1: size(filename,1)
 
 	%%
-	fprintf('%d\t',i);
-	if mod(i,10) == 0
-		fprintf('\n');
-	end
-
+	fdat = load(filename{jj,1},'-ascii');
+	[~,flname,~] = fileparts(filename{jj,1});
 
 	%%
 
-	fdat = load(filename{i,1},'-ascii');
+	fH = figure('Visible','Off');
 
-	[~, flname, ~] = fileparts(filename{i,1});
-
-	flname = stripFileString(flname);
-
-	%%	Plot
-
-	figH = figure('Visible','off');
-
-	plot(fdat(:,1)*10^6,fdat(:,2));
-	title(sprintf('Signal %02d -- %02d',str2num(flname(end-5:end-2)),str2num(flname(end-1:end))));
+	plot(fdat(:,1)*1E6, fdat(:,2));
 	xlabel('Time (\mus)');
-	ylabel('Amplitude');
-	% xlim([0 1]);
-	
+	ylabel('Amplitude (V)');
+
+	title('Time vs. Amplitude');
 	grid on;
 
-	prettyPlot(figH);
+	prettyPlot(fH);
 
 	%%
 
-	figtype = 'png';
+	% figtype = 'png';
+	AG_setPaper;
 	orient landscape;
-	saveas(figH, strcat(flname,'.bsl.',figtype));
-	close(figH);
+	print('-r150',strcat(flname,'.',figtype),'-dpng');
 
+	%%
+	close(fH);
 end
 
-fprintf('\n');	%	to insert a newline.
+%%
 
-movefile(strcat('*.',figtype),strcat('../bsl',figtype));
-
-clearvars
+if exist('mvtargetdir','var') && ~isempty(mvtargetdir)
+	movefile(strcat('*.',figtype), strcat('../',mvtargetdir));
+end
 
