@@ -1,13 +1,15 @@
 function LCCinlineCWTPlot(cw1,scales,wvlt,flname)
 
+	%%
 	szdata = size(cw1);
 
 	SC = abs(cw1.*cw1);
-	SC = 100*SC./sum(SC(:));
+	SC = 100*SC./sum(sum(SC));
 
 	szSC = size(SC);
 
-	freqscale = 1.5*scal2frq(scales,wvlt,4E-8);
+	%%
+	freqscale = scal2frq(scales,wvlt,4E-8);
 	freqscale = flipdim(freqscale,2)/1000;
 	xpoints = 0: 40E-3: (szSC(2)-1)*40E-3;
 
@@ -23,7 +25,9 @@ function LCCinlineCWTPlot(cw1,scales,wvlt,flname)
 	ylabel('Frequency (kHz)','FontSize',14);
 	title(char(strcat({'Continous Wavelet Transform using '},{wvlt})),'FontSize',16);
 	grid on;
+	prettyPlot;
 
+	%%
 	colormax0 = 30E-3; %10E-3;
 	colormax1 = 60E-3;%20E-3;
 	colormax2 = 80E-3;%30E-3;
@@ -44,6 +48,7 @@ function LCCinlineCWTPlot(cw1,scales,wvlt,flname)
 	colorbar;
 	ylim([floor(freqscale(1)) 1100]);
 
+	%%
 	figtype = 'png';
 	orient landscape;
 	saveas(fig1, strcat(flname,'.',figtype));
