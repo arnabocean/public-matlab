@@ -46,7 +46,7 @@ function LCCinlineCWTPlot(cw1,scales,wvlt,flname)
 	    caxis([0 colormax0]);
 	end
 	colorbar;
-	ylim([floor(freqscale(1)) 1100]);
+	ylim([floor(freqscale(1)) 600]);
 
 	%%
 	figtype = 'png';
