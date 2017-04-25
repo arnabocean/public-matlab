@@ -15,7 +15,7 @@ end
 cd(trgtfldr);
 
 %%
-copyfile('/home/arnab/workspace/matlab/repoclones/bbpublicmatlab/get_AllCWT_fromBessel.m','.');
+copyfile('/home/arnab/workspace/matlab/repoclones/bbpublicmatlab/get_AllCWT_2017.m','.');
 
 get_AllCWT_2017('*.raw.txt','*.wlt.mat');
 
