@@ -8,7 +8,7 @@ w = 2*pi*f;	%	Radial frequencies omega = 2*pi*f
 
 %% Create and plot test signal based on parameters above
 
-t = 0: 0.01: 10; 	%	10 seconds, sampled at 100Hz. => Nyquist freq = 50Hz.
+t = 0: 0.001: 10; 	%	10 seconds, sampled at 100Hz. => Nyquist freq = 50Hz.
 
 for k = 1: length(f)
 	xx(:,k) = A(k)*sin(w(k)*t);		%	Create each individual signal component
